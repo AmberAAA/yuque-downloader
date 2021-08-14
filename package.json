@@ -1,0 +1,28 @@
+{
+  "name": "yuque-downloader",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:AmberAAA/yuque-downloader.git",
+  "author": "AmberAAA <anborong1314@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' mocha"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "custom-env": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.6.1",
+    "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
+    "mocha": "^9.0.3",
+    "ts-node": "^10.2.0",
+    "tsconfig-paths": "^3.10.1",
+    "typescript": "^4.3.5"
+  }
+}
