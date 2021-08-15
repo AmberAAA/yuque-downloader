@@ -1,4 +1,5 @@
 import axios from "axios";
+require("custom-env").env()
 
 const http = axios.create({
   baseURL: "https://www.yuque.com/api/v2",
@@ -8,45 +9,21 @@ const http = axios.create({
   },
 });
 
-export type BaseInfo = {
-  id: Number;
-  slug: String;
-  title: String;
-  description: String;
-  user_id: Number;
-  book_id: Number;
-  format: String;
-  public: Number;
-  status: Number;
-  view_status: Number;
-  read_status: Number;
-  likes_count: Number;
-  comments_count: Number;
-  content_updated_at: String;
-  created_at: String;
-  updated_at: String;
-  published_at: String;
-  first_published_at: String;
-  draft_version: Number;
-  last_editor_id: Number;
-  word_count: Number;
-  cover: any;
-  custom_description: any;
-  last_editor: {
-    id: Number;
-    type: String;
-    login: String;
-    name: String;
-    description: String | null;
-    avatar_url: String;
-    followers_count: Number;
-    following_count: Number;
-    created_at: String;
-    updated_at: String;
-    _serializer: String;
-  };
-  book: null | String;
-  _serializer: String;
+export interface BaseInfo {
+  type: 'DOC'| 'TITLE',
+  title: string,
+  uuid: string,
+  url: string,          // slug
+  prev_uuid: string,
+  sibling_uuid: string,
+  child_uuid: string,
+  parent_uuid: string,
+  doc_id: number,
+  level: number, // 节点层级
+  id: number,
+  open_window: number,
+  visible: number,
+  depth: number,
 };
 
 
@@ -75,12 +52,13 @@ export type DetailInfo = {
 };
 
 /**
- * 获取文章列表
+ * 获取文章目录
+ * https://www.yuque.com/yuque/developer/hq9l5y#tpvN3
  * @param namespace 命名空间
  * @returns 文章列表
  */
 export async function getList(namespace: String): Promise<BaseInfo[]> {
-  const data = await http.get(`repos/${namespace}/docs`);
+  const data = await http.get(`repos/${namespace}/toc`);
   return data.data.data;
 }
 

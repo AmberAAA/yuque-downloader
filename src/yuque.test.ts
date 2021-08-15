@@ -11,14 +11,16 @@ describe("yuque", () => {
     const data = await getList(namespace)
     expect(data).be.length.gt(0)
     data.forEach((item) => {
-      assert.typeOf(item.slug, "string", "slug must being string")
+      assert.typeOf(item.url, "string", "slug must being string")
     })
 
     let arr = []
 
     // 可以获取文章详情
     for(let i = 0; i < 3 || i < data.length; i ++) {
-      arr.push(getMarkdown(namespace, data[i].slug))
+      if (data[i].type === 'DOC') {
+        arr.push(getMarkdown(namespace, data[i].url))
+      }
     }
 
     const markdowns = await Promise.all(arr);

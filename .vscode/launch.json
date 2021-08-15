@@ -8,7 +8,8 @@
             "program": "${workspaceRoot}/dist/index.js",
             "args": [],
             "cwd": "${workspaceRoot}",
-            "protocol": "inspector"
+            "protocol": "inspector",
+            "console": "integratedTerminal"
         }
     ]
 }

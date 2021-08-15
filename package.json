@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "start": "node ./dist",
     "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' mocha"
   },
   "dependencies": {
