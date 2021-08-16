@@ -1,13 +1,14 @@
 {
   "name": "yuque-downloader",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "repository": "git@github.com:AmberAAA/yuque-downloader.git",
   "author": "AmberAAA <anborong1314@gmail.com>",
   "license": "MIT",
   "private": false,
   "scripts": {
     "start": "node ./dist",
+    "build:watch": "tsc --watch --resolveJsonModule",
     "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' mocha"
   },
   "dependencies": {

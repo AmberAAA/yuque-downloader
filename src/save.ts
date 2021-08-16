@@ -14,5 +14,7 @@ export async function save (_path: string, name: string, content: string) {
   if (!fs.existsSync(dir)) {
     await fsp.mkdir(dir, { recursive: true })
   }
-  return fsp.writeFile(path.join(".", _path, name), content)
+  console.log(`saveing: ${path.join(".", _path, name)}`)
+  await fsp.writeFile(path.join(".", _path, name), content)
+  console.log(`save ending: ${path.join(".", _path, name)}`)
 }

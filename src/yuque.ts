@@ -1,13 +1,19 @@
 import axios from "axios";
-require("custom-env").env()
 
-const http = axios.create({
-  baseURL: "https://www.yuque.com/api/v2",
-  headers: {
-    "Content-Type": "application/json",
-    "X-Auth-Token": process.env.TOKEN,
-  },
-});
+// const http = axios.create({
+//   baseURL: "https://www.yuque.com/api/v2",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
+
+// http.interceptors.response.use(resp => {
+//   console.log(`x-ratelimit-remaining': ${resp.headers['x-ratelimit-remaining']}`)
+//   if (resp.headers['x-ratelimit-remaining'] <= 0) {
+//     console.error("ratelimit is zero, please waiting one hour any try again! https://www.yuque.com/yuque/developer/api#5b3a1535")
+//   }
+//   return resp
+// })
 
 export interface BaseInfo {
   type: 'DOC'| 'TITLE',
@@ -18,12 +24,13 @@ export interface BaseInfo {
   sibling_uuid: string,
   child_uuid: string,
   parent_uuid: string,
-  doc_id: number,
+  doc_id: number | "",
   level: number, // 节点层级
-  id: number,
+  id: number | "",
   open_window: number,
   visible: number,
   depth: number,
+  slug: string
 };
 
 
@@ -57,8 +64,13 @@ export type DetailInfo = {
  * @param namespace 命名空间
  * @returns 文章列表
  */
-export async function getList(namespace: String): Promise<BaseInfo[]> {
-  const data = await http.get(`repos/${namespace}/toc`);
+export async function getList(namespace: String, token: String): Promise<BaseInfo[]> {
+  const data = await axios.get(`repos/${namespace}/toc`, {
+    baseURL: "https://www.yuque.com/api/v2",
+    headers: {
+      "X-Auth-Token": token,
+    }
+  });
   return data.data.data;
 }
 
@@ -69,8 +81,14 @@ export async function getList(namespace: String): Promise<BaseInfo[]> {
  */
 export async function getMarkdown(
   namespace: String,
-  slug: String
+  slug: String,
+  token: String
 ): Promise<DetailInfo> {
-  const data = await http.get(`/repos/${namespace}/docs/${slug}`);
+  const data = await axios.get(`/repos/${namespace}/docs/${slug}`, {
+    baseURL: "https://www.yuque.com/api/v2",
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
   return data.data.data as DetailInfo;
 }
