@@ -76,7 +76,7 @@ export async function download (namespace: string, token: string) {
     const dir = []
     let start: Toc | undefined = item
     while (start && start.parent_uuid) {
-      const parent = originToc.find(toc => toc.uuid === (start as Toc).parent_uuid)
+      const parent = originToc.find(toc => toc.uuid === (start as Toc).parent_uuid && toc.type !== "TITLE")
       parent && dir.unshift(parent.uuid)
       start = parent 
     }
@@ -85,8 +85,8 @@ export async function download (namespace: string, token: string) {
         dir.push(item.uuid)
         item.path = path.join("/views/", dir.join("/")).replace(/\\/g, "/")
         await save("/views/" + dir.join("/"), 'README.md', item.body as string)
-      } else if (item.body && item.slug !== "#") {
-        item.path = path.join("/views/", dir.join("/"), "/" + item.slug + '.md').replace(/\\/g, "/")
+      } else if (item.slug !== "#") {
+        item.path = path.join("/views/", dir.join("/"), "/" + item.slug).replace(/\\/g, "/")
         await save("/views/" + dir.join("/"), item.slug + '.md', item.body as string)
       } 
     }
