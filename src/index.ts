@@ -55,8 +55,8 @@ export async function download (namespace: string, token: string) {
     if (item) {
       const t = originToc.find(a => a.slug === item.slug)
       if (t) {
-        t.body = `---\ntitle: ${item.title}\n---${item.body}`
-        t.body = handleImg(item.body)
+        t.body = `---\ntitle: ${item.title}\nsidebar: auto\n---\n${item.body}`
+        t.body = handleImg(t.body)
       }
     }
   })
@@ -132,9 +132,3 @@ async function downloadImages(url :URL) {
   const name = names[names.length - 1]
   await save("/views/assert", name , res.data)
 }
-
-
-( async function () {
-  await download("amberaaa/ilmggv", "cxJQkbzei5Ux9jKvTdayuvr24vpKkVoSRtroJVJT")
-  console.log(`download finish`)
-} )()
